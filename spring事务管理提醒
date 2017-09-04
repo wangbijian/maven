@@ -1,4 +1,4 @@
-事务交给spring管理后，异常一定不能捕获。如下代码：
+1、事务交给spring管理后，异常一定不能捕获。不然出现异常，事务都不回滚。如下代码：
 
 
 @Service
@@ -18,3 +18,6 @@ public class UserDaoService {
 		return userDao.getUsers();
 	}
 }
+
+2、事务交给spring管理后，session一定要通过factory.getCurrentSession()获得。不能通过factory.openSession()获得。通过前者获得事务才起作用，
+   后者事务无效。
