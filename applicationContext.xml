@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xmlns:aop="http://www.springframework.org/schema/aop" 
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:context="http://www.springframework.org/schema/context" 
+        xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+                            http://www.springframework.org/schema/aop 
+                            http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+                            http://www.springframework.org/schema/tx 
+                            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+                            http://www.springframework.org/schema/context 
+                            http://www.springframework.org/schema/context/spring-context-2.5.xsd ">
+    <!--面向切面注解方式  -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    
+    <!--自动扫描包中的类，并创建实例  -->
+    <context:component-scan base-package="cn.com.test,cn.com.daoImp,cn.com.service"/> 
+    
+ 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+    </bean>
+    <!--事务配置-->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	   <property name="sessionFactory">
+	       <ref bean="sessionFactory"/>
+	   </property>
+	</bean>
+    <!-- 注解方式 -->
+    <tx:annotation-driven transaction-manager="transactionManager"  proxy-target-class="true"/>  
+</beans >
