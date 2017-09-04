@@ -1,0 +1,20 @@
+事务交给spring管理后，异常一定不能捕获。如下代码：
+
+
+@Service
+public class UserDaoService {
+	@Resource UserDao userDao;
+	
+	@Transactional(rollbackFor = Exception.class)
+	public void save(String ss) throws Exception{
+		String s = null;
+		userDao.save(ss);
+		userDao.save("abc");
+		//int a = 1/0;
+		throw new Exception("abre");//此处一定不能捕获
+	}
+	
+	public List<User> getUsers(){
+		return userDao.getUsers();
+	}
+}
